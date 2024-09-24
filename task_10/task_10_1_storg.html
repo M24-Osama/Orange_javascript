@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+      }
+      form {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+      }
+      form input,
+      form select,
+      form textarea {
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      form label {
+        margin-top: 10px;
+      }
+      form label input {
+        display: inline;
+        width: auto;
+      }
+      form .checkbox-group {
+        display: flex;
+        flex-direction: column;
+      }
+      form button {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      form button:hover {
+        background-color: #0056b3;
+      }
+      .card {
+        background-color: #fff;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 300px;
+        margin: 10px;
+        text-align: left;
+      }
+      .cards-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+    </style>
+  </head>
+  <body>
+    <form id="personalForm">
+      <label for="name">Your Name:</label>
+      <input type="text" id="name" required />
+
+      <label for="age">Your Age:</label>
+      <input type="number" id="age" min="1" required />
+
+      <label for="gender">Gender:</label>
+      <select id="gender" required>
+        <option value="">Select</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+      </select>
+
+      <label for="description">Brief Description:</label>
+      <textarea id="description" rows="3" required></textarea>
+
+      <label for="major">Your Major and University:</label>
+      <input type="text" id="major" required />
+
+      <label>Programming Languages (Select at least 3):</label>
+      <div class="checkbox-group">
+        <label
+          ><input type="checkbox" value="JavaScript" class="languages" />
+          JavaScript</label
+        >
+        <label
+          ><input type="checkbox" value="Python" class="languages" />
+          Python</label
+        >
+        <label
+          ><input type="checkbox" value="C++" class="languages" /> C++</label
+        >
+        <label
+          ><input type="checkbox" value="Java" class="languages" /> Java</label
+        >
+        <label
+          ><input type="checkbox" value="Ruby" class="languages" /> Ruby</label
+        >
+      </div>
+
+      <button type="submit">Submit</button>
+
+      <div class="cards-container" id="cardsContainer"></div>
+    </form>
+    <script>
+      localStorage.clear();
+      document
+        .getElementById("personalForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          let name = document.getElementById("name").value;
+          let age = document.getElementById("age").value;
+          let gender = document.getElementById("gender").value;
+          let description = document.getElementById("description").value;
+          let major = document.getElementById("major").value;
+          let languages = Array.from(
+            document.querySelectorAll(".languages:checked")
+          ).map((lang) => lang.value);
+
+          if (languages.length < 3) {
+            alert("Please select at least 3 programming languages.");
+          } else {
+            let personalData = {
+              name,
+              age,
+              gender,
+              description,
+              major,
+              languages,
+            };
+
+            let storedData = JSON.parse(
+              localStorage.getItem("personalData") || "[]"
+            );
+            storedData.push(personalData);
+            localStorage.setItem("personalData", JSON.stringify(storedData));
+
+            const cardsContainer = document.getElementById("cardsContainer");
+            let storedGetData =
+              JSON.parse(localStorage.getItem("personalData")) || [];
+            storedGetData.forEach((data, index) => {
+              cardsContainer.innerHTML = `
+            <div class='card'>
+                    <p><strong>Name:</strong>${data.name}</p>
+                    <p><strong>Age:</strong> ${data.age}</p>
+                    <p><strong>Gender:</strong> ${data.gender}</p>
+                    <p><strong>Description:</strong> ${data.description}</p>
+                    <p><strong>Major:</strong> ${data.major}</p>
+                    <p><strong>Languages:</strong> ${data.languages.join(
+                      ", "
+                    )}</p>
+            </div>`;
+            });
+          }
+        });
+    </script>
+  </body>
+</html>

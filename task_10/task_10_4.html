@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      table,
+      th,
+      td {
+        border: 1px solid black;
+      }
+      p {
+        display: inline;
+      }
+      .p1 {
+        color: green;
+      }
+      .p2 {
+        color: red;
+      }
+      .p3 {
+        color: blue;
+      }
+    </style>
+  </head>
+  <body>
+    <form action="" id="form">
+      <label for="Name">Name:</label>
+      <input type="text" name="Name" id="Name" required />
+
+      <label for="Email">Email:</label>
+      <input type="email" name="Email" id="Email" required />
+
+      <label for="Mobile">Mobile:</label>
+      <input type="text" name="Mobile" id="Mobile" required />
+
+      <button type="submit" id="submit">Click On Me Print</button>
+    </form>
+    <div id="datadiv"></div>
+    <hr />
+    <table id="table"></table>
+    <script>
+      const form = document.getElementById("form");
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const Name = document.getElementById("Name").value;
+        const Email = document.getElementById("Email").value;
+        const Mobile = document.getElementById("Mobile").value;
+
+        const data = JSON.parse(localStorage.getItem("data") || "[]");
+        data.push({ Name, Email, Mobile });
+        localStorage.setItem("data", JSON.stringify(data));
+        myFunction();
+      });
+      myFunction();
+      function myFunction() {
+        const storedData = JSON.parse(localStorage.getItem("data"));
+        const table = document.getElementById("table");
+        const datadiv = document.getElementById("datadiv");
+        storedData.forEach((data) => {
+          const t = document.createElement("tr");
+          t.innerHTML = `
+        <td>${data.Name}</td>
+        <td>${data.Email}</td>
+        <td>${data.Mobile}</td>
+        `;
+          table.appendChild(t);
+          const p = document.createElement("p");
+          p.innerHTML = `<div>
+        <p class="p1">${data.Name}</p>
+        <p class="p2">${data.Email}</p>
+        <p class="p3">${data.Mobile}</p>
+        </div>
+        `;
+          datadiv.appendChild(p);
+        });
+      }
+    </script>
+  </body>
+</html>

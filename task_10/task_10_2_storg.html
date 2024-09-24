@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project Form</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+        width: 100%;
+      }
+      form {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+      }
+      form input,
+      form select,
+      form textarea {
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      form label {
+        margin-top: 10px;
+      }
+      form label input {
+        display: inline;
+        width: auto;
+      }
+      form .checkbox-group {
+        display: flex;
+        flex-direction: column;
+      }
+      form button {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      form button:hover {
+        background-color: #0056b3;
+      }
+      .card {
+        background-color: #fff;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 300px;
+        margin: 10px;
+        text-align: left;
+      }
+      .form-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="form-container">
+      <form id="projectForm">
+        <label for="subject">Subject:</label>
+        <input type="text" id="subject" required /><br />
+
+        <label for="description">Description:</label>
+        <textarea id="description" rows="4" required></textarea><br />
+
+        <label for="userTypes">User Types:</label>
+        <input type="text" id="userTypes" required /><br />
+
+        <label for="technology">Technology Used:</label>
+        <input type="text" id="technology" required /><br />
+
+        <button type="submit">Submit</button>
+        <div class="card-container" id="cardContainer"></div>
+      </form>
+    </div>
+
+    <script>
+      document
+        .getElementById("projectForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          const subject = document.getElementById("subject").value;
+          const description = document.getElementById("description").value;
+          const userTypes = document.getElementById("userTypes").value;
+          const technology = document.getElementById("technology").value;
+
+          const project = { subject, description, userTypes, technology };
+
+          let projects = JSON.parse(sessionStorage.getItem("projects")) || [];
+          projects.push(project);
+          sessionStorage.setItem("projects", JSON.stringify(projects));
+
+          const projectsfromStorage =
+            JSON.parse(sessionStorage.getItem("projects")) || [];
+          const cardContainer = document.getElementById("cardContainer");
+
+          cardContainer.innerHTML = "";
+          projectsfromStorage.forEach((project) => {
+            const card = document.createElement("div");
+            cardContainer.innerHTML = `
+            <p><strong>Subject:</strong> ${project.subject}</p>
+            <p><strong>Description:</strong> ${project.description}</p>
+            <p><strong>User Types:</strong> ${project.userTypes}</p>
+            <p><strong>Technology Used:</strong> ${project.technology}</p>
+        `;
+          });
+        });
+    </script>
+  </body>
+</html>

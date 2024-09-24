@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      console.log("Hello" + " " + "World");
+      let str1 = "JavaScript";
+      console.log(str1.length);
+      let str2 = "Programming";
+      console.log(str2.charAt(0));
+      let str3 = "coding is fun";
+      console.log(str3.slice(0, 3) + "e");
+      let str4 = "cat";
+      console.log(str4.replace("a", "e"));
+      let str5 = "javascript";
+      console.log(str5.toUpperCase());
+      let str6 = "apple,banana,orange";
+      console.log(str6.split(","));
+      let arr = ["hello", "world"];
+      console.log(arr.join(" "));
+      let str7 = "   hello world ";
+      console.log(str7.trim());
+      let str8 = "hello world";
+      console.log(str8.includes("world"));
+      let str9 = "hello";
+      console.log(str9.split("").reverse().join(""));
+      let str10 = "elephant";
+      console.log(str10.indexOf("e", 1));
+      let str11 = "racecar";
+      if (str11 == str11.split("").reverse().join("")) {
+        console.log("true");
+      } else {
+        console.log("false");
+      }
+      let str12 = "hello world";
+      console.log(
+        str12
+          .split(" ")
+          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(" ")
+      );
+      let num = 1234.5678;
+      console.log(num.toFixed(2).toString());
+      const str = "There are 3 apples and 2 oranges";
+      console.log(str.split(" ").filter((word) => !isNaN(word)));
+      function emailValidate(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      }
+      console.log(emailValidate("example@email.com"));
+      let str13 = "This is a bad word";
+      console.log(str13.replaceAll("bad", "good"));
+      let str14 = "aabbc";
+      console.log([...new Set(str14)].join(""));
+      let str15 = "hello";
+      console.log(str15.split("").sort().join(""));
+      function areAnagrams(str1, str2) {
+        const sortedStr1 = str1.split("").sort().join("");
+        const sortedStr2 = str2.split("").sort().join("");
+        return sortedStr1 === sortedStr2;
+      }
+      console.log(areAnagrams("listen", "silent"));
+      let str16 = "The quick brown fox";
+      console.log(str16.split(" ").reverse().join(" "));
+
+      function findLongestWord(sentence) {
+        let words = sentence.split(" ");
+        let longestWord = words[0];
+
+        for (let word of words) {
+          if (word.length > longestWord.length) {
+            longestWord = word;
+          }
+        }
+        return longestWord;
+      }
+      console.log(findLongestWord("Web development is fascinating"));
+      //24
+      function charFrequency(str) {
+        let frequency = {};
+
+        for (let char of str) {
+          frequency[char] = (frequency[char] || 0) + 1;
+        }
+
+        return frequency;
+      }
+      console.log(charFrequency("mississippi"));
+      function replaceVowelsWithNumbers(str) {
+        const vowelMap = { a: 1, e: 2, i: 3, o: 4, u: 5 };
+        let result = "";
+
+        for (let i = 0; i < str.length; i++) {
+          let char = str[i].toLowerCase();
+
+          if (vowelMap[char]) {
+            result += vowelMap[char];
+          } else {
+            result += str[i];
+          }
+        }
+
+        return result;
+      }
+
+      const input = "Hello World";
+      const output = replaceVowelsWithNumbers(input);
+      console.log(output);
+    </script>
+  </body>
+</html>

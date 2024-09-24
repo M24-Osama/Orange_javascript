@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      #div1 {
+        background-color: rgb(0, 98, 255);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 20vh;
+        width: 100%;
+        color: white;
+      }
+
+      #div1 p {
+        font-size: xx-large;
+        font-weight: bold;
+      }
+      table {
+        width: 100%;
+        border: 1px solid black;
+      }
+      th,
+      td {
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="div1">
+      <p id="p1">Click to show Table / Double Click to hide Table</p>
+    </div>
+    <div id="div2">
+      <table id="table">
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Mobile</th>
+        </tr>
+      </table>
+    </div>
+    <script>
+      fetch("jsonData.json")
+        .then((response) => response.json())
+        .then((data) => {
+          let table = document.getElementById("table");
+          console.log(data);
+          const usersArray = data.users;
+          console.log(usersArray);
+          usersArray.forEach((d) => {
+            const t = document.createElement("tr");
+            t.innerHTML = `
+              <td>${d.firstName} ${d.lastName}</td>
+              <td>${d.email}</td>
+              <td>${d.phone}</td>
+            `;
+            table.appendChild(t);
+          });
+        });
+
+      let p1 = document.getElementById("p1");
+      let div2 = document.getElementById("div2");
+
+      p1.addEventListener("click", function () {
+        if (div2.style.display == "none") {
+          div2.style.display = "block";
+        } else {
+          div2.style.display = "none";
+        }
+      });
+    </script>
+  </body>
+</html>

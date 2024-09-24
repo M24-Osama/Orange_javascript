@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registration Form</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f5f5f5;
+        margin: 0;
+        font-family: Arial, sans-serif;
+      }
+
+      form {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+        max-width: 400px;
+        height: 100vh;
+      }
+
+      label {
+        font-weight: bold;
+      }
+
+      input {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        width: 100%;
+      }
+
+      input:focus {
+        border-color: #007bff;
+        outline: none;
+      }
+
+      button {
+        padding: 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <form id="registrationForm">
+      <label for="firstName">First Name:</label>
+      <input type="text" id="firstName" name="firstName" required /><br />
+
+      <label for="lastName">Last Name:</label>
+      <input type="text" id="lastName" name="lastName" required /><br />
+
+      <label for="birthDate">Birth Date:</label>
+      <input type="date" id="birthDate" name="birthDate" required /><br />
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required /><br />
+
+      <label for="confirmEmail">Confirm Email:</label>
+      <input
+        type="email"
+        id="confirmEmail"
+        name="confirmEmail"
+        required
+      /><br />
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required /><br />
+
+      <label for="confirmPassword">Confirm Password:</label>
+      <input
+        type="password"
+        id="confirmPassword"
+        name="confirmPassword"
+        required
+      /><br />
+
+      <label for="mobileNumber">Mobile Number:</label>
+      <input type="text" id="mobileNumber" name="mobileNumber" required /><br />
+
+      <button type="submit">Register</button>
+    </form>
+
+    <div id="errorMessages" style="color: red"></div>
+
+    <script>
+      document
+        .getElementById("registrationForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          let errorMessages = [];
+
+          // 1. Check if the names contain only letters
+          const nameRegex = /^[A-Za-z]+$/;
+          const firstName = document.getElementById("firstName").value.trim();
+          const lastName = document.getElementById("lastName").value.trim();
+
+          if (!nameRegex.test(firstName)) {
+            errorMessages.push("First name should contain only letters.");
+          }
+
+          if (!nameRegex.test(lastName)) {
+            errorMessages.push("Last name should contain only letters.");
+          }
+
+          // 2. Validate birth date
+          const birthDate = document.getElementById("birthDate").value;
+          if (!birthDate) {
+            errorMessages.push("Please enter a valid birth date.");
+          }
+
+          // 3. Check email structure
+          const email = document.getElementById("email").value.trim();
+          const confirmEmail = document
+            .getElementById("confirmEmail")
+            .value.trim();
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+          if (!emailRegex.test(email)) {
+            errorMessages.push("Invalid email structure.");
+          }
+
+          // 4. Check if the two emails are the same
+          if (email !== confirmEmail) {
+            errorMessages.push("Emails do not match.");
+          }
+
+          // 5. Password validation
+          const password = document.getElementById("password").value;
+          const confirmPassword =
+            document.getElementById("confirmPassword").value;
+          const passwordRegex =
+            /^(?=.*[A-Z])(?=.*\d{2,})(?=.*[!@#$%^&*(),.?":{}|<>]).{8,32}$/;
+
+          if (!passwordRegex.test(password)) {
+            errorMessages.push(
+              "Password must start with a capital letter, contain at least two numbers, at least one special character, and be 8-32 characters long."
+            );
+          }
+
+          // 5d. Check if password confirmation is right
+          if (password !== confirmPassword) {
+            errorMessages.push("Password confirmation does not match.");
+          }
+
+          // 6. Mobile number validation
+          const mobileNumber = document
+            .getElementById("mobileNumber")
+            .value.trim();
+          const mobileRegex = /^\d{10}$/;
+
+          if (!mobileRegex.test(mobileNumber)) {
+            errorMessages.push("Mobile number should be exactly 10 digits.");
+          }
+
+          // Display errors or submit form
+          const errorDiv = document.getElementById("errorMessages");
+          if (errorMessages.length > 0) {
+            errorDiv.innerHTML = errorMessages.join("<br>");
+          } else {
+            errorDiv.innerHTML = "Form submitted successfully!";
+            // Proceed with form submission, e.g., sending data to the server
+          }
+        });
+    </script>
+  </body>
+</html>
